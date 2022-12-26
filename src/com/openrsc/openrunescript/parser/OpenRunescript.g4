@@ -12,6 +12,7 @@ fragment CloseBlockComment : '*/';
 fragment LongCloseBlockComment : '*//';
 fragment StartLineComment : '//';
 fragment Quote : '"';
+fragment SingleQuote : '\'';
 fragment EndOfLine : [\r\n];
 fragment NotEndOfLine : ~[\r\n];
 fragment Tab : [\t];
@@ -48,7 +49,7 @@ Number
     ;
 
 String
-    : Quote StringCharacter+ Quote
+    : (Quote StringCharacter+ Quote) | (SingleQuote StringCharacter+ SingleQuote)
     ;
 
 Identifier
@@ -80,11 +81,11 @@ literalList
     ;
 
 actionStatement
-    : actionSpecifier actionName OpenParens literalList CloseParens EndStatement
+    : actionSpecifier actionName OpenParens literalList? CloseParens EndStatement
     ;
 
 headerStatement
-    : labelSpecifier actionName (',' literalList) EndStatement
+    : labelSpecifier actionName (Comma literalList)? EndStatement
     ;
 
 block
