@@ -75,7 +75,7 @@ public class ParseTreeVisitor extends OpenRunescriptBaseVisitor<Object> {
 
     @Override
     public Literal visitActionName(OpenRunescriptParser.ActionNameContext ctx) {
-        return new Literal(getStatement(), Literal.LiteralType.Identifier, ctx.Identifier().getText());
+        return new Literal(getStatement(), Literal.LiteralType.Identifier, ctx.Identifier().getText().toLowerCase());
     }
 
     @Override
