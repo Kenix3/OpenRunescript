@@ -1,8 +1,8 @@
 package com.openrsc.openrunescript.compiler;
 
 import com.openrsc.openrunescript.datamodel.*;
-import com.openrsc.openrunescript.parser.OpenRunescriptBaseVisitor;
-import com.openrsc.openrunescript.parser.OpenRunescriptParser;
+import com.openrsc.openrunescript.compiler.parser.OpenRunescriptBaseVisitor;
+import com.openrsc.openrunescript.compiler.parser.OpenRunescriptParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
