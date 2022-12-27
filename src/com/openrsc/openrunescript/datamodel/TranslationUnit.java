@@ -40,6 +40,14 @@ public class TranslationUnit {
     }
 
     /**
+     * Get the list of {@link Block} associated with this {@link TranslationUnit}.
+     * @return The list of {@link Block} associated with this {@link TranslationUnit}.
+     */
+    public LinkedHashMap<String, Block> getBlocks() {
+        return blocks;
+    }
+
+    /**
      * Add a {@link Block} to the {@link TranslationUnit}
      * @param block The {@link Block} to add
      * @return The {@link Block} that was added.

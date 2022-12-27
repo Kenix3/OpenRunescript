@@ -11,8 +11,6 @@ import org.apache.logging.log4j.Logger;
 public class Literal {
     private static final Logger log = LogManager.getLogger();
 
-
-
     /**
      * The parent {@link Statement} of this {@link Literal}.
      */

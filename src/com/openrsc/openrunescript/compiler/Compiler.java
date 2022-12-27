@@ -1,5 +1,6 @@
 package com.openrsc.openrunescript.compiler;
 
+import com.openrsc.openrunescript.datamodel.BinaryOutput;
 import com.openrsc.openrunescript.datamodel.TranslationUnit;
 import com.openrsc.openrunescript.compiler.parser.*;
 import org.antlr.v4.runtime.BufferedTokenStream;
@@ -76,7 +77,9 @@ public class Compiler {
         }
 
         final TranslationUnit translationUnit = linker.link();
-        // TODO: Save binary to disk
+
+        final BinaryOutput output = new BinaryOutput(translationUnit);
+        output.run("a.out");
 
         return translationUnit;
     }
@@ -124,7 +127,7 @@ public class Compiler {
             // Create a Compiler.
             final Compiler compiler = new Compiler(files);
             final TranslationUnit translationUnit = compiler.run();
-            System.out.print(translationUnit);
+            //System.out.print(translationUnit);
         } catch (final Exception e) {
             log.error(e);
         }
