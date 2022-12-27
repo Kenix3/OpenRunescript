@@ -169,8 +169,6 @@ public class ParseTreeVisitor extends OpenRunescriptBaseVisitor<Object> {
             getTranslationUnit().addBlock(visitBlock(blockCtx));
         }
 
-        System.out.print(getTranslationUnit());
-
         return getTranslationUnit();
     }
 }
