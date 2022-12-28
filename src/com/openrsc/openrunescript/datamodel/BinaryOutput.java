@@ -153,6 +153,13 @@ public class BinaryOutput {
      * @param block The {@link Block} to convert child {@link Statement} to binary.
      */
     protected void blockTextPass(final Block block) {
+        try {
+            // Store a reference to the block file name
+            textOutputStream.writeInt(rodataOffsetMap.get(block.getFileName()));
+        } catch (final IOException e) {
+            log.error("Failed to write block name reference \"" + block.getFileName() + "\": " + e.getMessage());
+        }
+
         // Process the header block statement.
         statementTextPass(block.getHeaderStatement());
 
@@ -274,6 +281,20 @@ public class BinaryOutput {
      * @param block The {@link Block} to convert child {@link Statement} data to binary.
      */
     protected void blockDataPass(final Block block) {
+        // Store the Block name into rodata.
+        if (!rodataOffsetMap.containsKey(block.getFileName())) {
+            // Get the offset that this block name will occupy in the output stream.
+            final int rodataOffset = rodataOutput.size();
+            try {
+                // Write the block name.
+                rodataOutputStream.writeUTF(block.getFileName());
+            } catch (final IOException e) {
+                log.error("Failed to write block filename \"" + block.getFileName() + "\": " + e.getMessage());
+            }
+            // Add the literal value to the offset map to be used in the .text section.
+            rodataOffsetMap.put(block.getFileName(), rodataOffset);
+        }
+
         // Process the header statement for data literals.
         statementDataPass(block.getHeaderStatement());
 
