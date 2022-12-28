@@ -19,19 +19,19 @@ public class ParseTreeVisitor extends OpenRunescriptBaseVisitor<Object> {
     /**
      * The {@link TranslationUnit} that this {@link ParseTreeVisitor} is operating on.
      */
-    TranslationUnit contextTranslationUnit;
+    private TranslationUnit contextTranslationUnit;
     /**
      * The {@link Block} that this {@link ParseTreeVisitor} is operating on.
      */
-    Block contextBlock;
+    private Block contextBlock;
     /**
      * The {@link Statement} that this {@link ParseTreeVisitor} is operating on.
      */
-    Statement contextStatement;
+    private Statement contextStatement;
     /**
      * The name of the file that this {@link ParseTreeVisitor} is operating on.
      */
-    final String fileName;
+    private final String fileName;
 
     /**
      * Create a {@link ParseTreeVisitor}.
