@@ -184,7 +184,7 @@ public class BinaryOutput {
     protected void statementTextPass(final Statement statement) {
         // Store the statement specifier.
         try {
-            textOutputStream.write(statement.getStatementSpecifier().ordinal());
+            textOutputStream.writeByte(statement.getStatementSpecifier().ordinal());
         } catch (final IOException e) {
             log.error("IO Exception on writing statement specifier \"" + statement.toString() + "\": " + e.getMessage());
         }
@@ -203,7 +203,7 @@ public class BinaryOutput {
 
         // Store the literal type.
         try {
-            textOutputStream.write(actionName.getType().ordinal());
+            textOutputStream.writeByte(actionName.getType().ordinal());
         } catch (final IOException e) {
             log.error("IO Exception on writing statement action name type \"" + statement.toString() + "\": " + e.getMessage());
         }
@@ -222,7 +222,7 @@ public class BinaryOutput {
             if (parameterList.size() > Byte.MAX_VALUE) {
                 // TODO: We need to error here.
             }
-            textOutputStream.write(parameterList.size());
+            textOutputStream.writeByte(parameterList.size());
         } catch (final IOException e) {
             log.error("IO Exception on writing statement literal parameter count \"" + statement.toString() + "\": " + e.getMessage());
         }
@@ -235,7 +235,7 @@ public class BinaryOutput {
 
             // Store the literal type.
             try {
-                textOutputStream.write(type.ordinal());
+                textOutputStream.writeByte(type.ordinal());
             } catch (final IOException e) {
                 log.error("IO Exception on writing statement literal parameter type, " + type.ordinal() + ", \"" +
                         value + "\", \"" + statement.toString() + "\": " + e.getMessage());
