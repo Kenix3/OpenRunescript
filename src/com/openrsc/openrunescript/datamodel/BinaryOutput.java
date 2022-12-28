@@ -160,6 +160,13 @@ public class BinaryOutput {
             log.error("Failed to write block name reference \"" + block.getFileName() + "\": " + e.getMessage());
         }
 
+        try {
+            textOutputStream.writeInt(block.getActionStatements().size());
+        } catch (final IOException e) {
+            log.error("Failed to write block action statement count " + block.getActionStatements().size() + " \"" +
+                    block.getFileName() + "\": " + e.getMessage());
+        }
+
         // Process the header block statement.
         statementTextPass(block.getHeaderStatement());
 
@@ -247,7 +254,7 @@ public class BinaryOutput {
 
             try {
                 // Store the offset into rodata to find the literal.
-                textOutputStream.write(literalOffset);
+                textOutputStream.writeInt(literalOffset);
             } catch (final IOException e) {
                 log.error("IO Exception on writing statement literal parameter offset, " + type.ordinal() + ", \"" +
                         value + "\", \"" + statement.toString() + "\": " + e.getMessage());

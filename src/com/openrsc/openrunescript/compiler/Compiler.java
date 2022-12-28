@@ -1,5 +1,6 @@
 package com.openrsc.openrunescript.compiler;
 
+import com.openrsc.openrunescript.datamodel.BinaryInput;
 import com.openrsc.openrunescript.datamodel.BinaryOutput;
 import com.openrsc.openrunescript.datamodel.TranslationUnit;
 import com.openrsc.openrunescript.compiler.parser.*;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class Compiler {
     /**
      * The OpenRunescript source files to compile.
      */
-    private final HashMap<String, CharStream> files;
+    private final LinkedHashMap<String, CharStream> files;
     /**
      * A list of {@link TranslationUnit} that the {@link Compiler} is working on.
      */
@@ -40,7 +41,7 @@ public class Compiler {
      * Create a Compiler.
      * @param files The OpenRunescript source files to compile.
      */
-    public Compiler(final HashMap<String, CharStream> files) {
+    public Compiler(final LinkedHashMap<String, CharStream> files) {
         this.files = files;
 
         linker = new Linker(this);
@@ -78,8 +79,11 @@ public class Compiler {
 
         final TranslationUnit translationUnit = linker.link();
 
-        final BinaryOutput output = new BinaryOutput(translationUnit);
+        /*final BinaryOutput output = new BinaryOutput(translationUnit);
         output.run("a.out");
+        final BinaryInput input = new BinaryInput();
+        final TranslationUnit tu = input.run("a.out");
+        System.out.println(tu.toString());*/
 
         return translationUnit;
     }
@@ -111,7 +115,7 @@ public class Compiler {
             return;
         }
 
-        final HashMap<String, CharStream> files = new HashMap<>(args.length);
+        final LinkedHashMap<String, CharStream> files = new LinkedHashMap<>(args.length);
 
         // Loop through all the files, affirm they exist, and create a CharStream from them.
         for (final String arg : args) {
@@ -129,7 +133,7 @@ public class Compiler {
             final TranslationUnit translationUnit = compiler.run();
             //System.out.print(translationUnit);
         } catch (final Exception e) {
-            log.error(e);
+            log.error("Compiler encountered an uncaught error!", e);
         }
     }
 }
