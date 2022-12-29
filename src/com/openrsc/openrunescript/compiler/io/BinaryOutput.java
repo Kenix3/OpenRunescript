@@ -1,12 +1,15 @@
-package com.openrsc.openrunescript.datamodel;
+package com.openrsc.openrunescript.compiler.io;
 
+import com.openrsc.openrunescript.datamodel.Block;
+import com.openrsc.openrunescript.datamodel.Literal;
+import com.openrsc.openrunescript.datamodel.Statement;
+import com.openrsc.openrunescript.datamodel.TranslationUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HexFormat;
 import java.util.Map;
 
 /**

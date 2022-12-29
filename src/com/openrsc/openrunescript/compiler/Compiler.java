@@ -1,7 +1,5 @@
 package com.openrsc.openrunescript.compiler;
 
-import com.openrsc.openrunescript.datamodel.BinaryInput;
-import com.openrsc.openrunescript.datamodel.BinaryOutput;
 import com.openrsc.openrunescript.datamodel.TranslationUnit;
 import com.openrsc.openrunescript.compiler.parser.*;
 import org.antlr.v4.runtime.BufferedTokenStream;

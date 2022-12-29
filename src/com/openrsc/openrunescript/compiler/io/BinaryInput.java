@@ -1,5 +1,6 @@
-package com.openrsc.openrunescript.datamodel;
+package com.openrsc.openrunescript.compiler.io;
 
+import com.openrsc.openrunescript.datamodel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
