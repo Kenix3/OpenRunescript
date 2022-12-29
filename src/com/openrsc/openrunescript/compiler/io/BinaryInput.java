@@ -4,7 +4,6 @@ import com.openrsc.openrunescript.datamodel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
 import java.io.*;
 import java.nio.ByteBuffer;
 
@@ -185,7 +184,7 @@ public class BinaryInput {
         }
 
         // Create the statement based on the statement specifier.
-        Statement statement = null;
+        Statement statement;
         if (statementSpecifier == Statement.StatementSpecifier.Label) {
             if (block.getHeaderStatement() != null) {
                 log.error("Data tried to add a header statement, but already has one in file \"" + fileName + "\"");
@@ -306,7 +305,6 @@ public class BinaryInput {
         } catch (final IndexOutOfBoundsException e) {
             log.error("Failed to read string length from file \"" + fileName + "\": " + e.getMessage());
         }
-        String blockName = "";
         try {
             byte[] nameArray = new byte[stringLength];
             // Add two because the first two bytes of a serialized string is the length.
