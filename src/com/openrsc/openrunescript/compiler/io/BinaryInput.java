@@ -16,23 +16,63 @@ import java.nio.ByteBuffer;
 public class BinaryInput {
     private static final Logger log = LogManager.getLogger();
 
+    /**
+     * The file name from which this {@link BinaryInput} is reading data from.
+     */
     private String fileName;
+    /**
+     * The {@link FileInputStream} for the raw data from the file.
+     */
     private FileInputStream fileInputStream;
+    /**
+     * The {@link DataInputStream} to read from the {@link BinaryInput#fileInputStream}.
+     */
     private DataInputStream fileDataInputStream;
+    /**
+     * The {@link ByteArrayInputStream} for the text section of the file.
+     */
     private ByteArrayInputStream textInputStream;
+    /**
+     * The {@link DataInputStream} to read from the {@link BinaryInput#textInputStream}.
+     */
     private DataInputStream textDataInputStream;
+    /**
+     * A {@link ByteBuffer} holding the rodata section for this file.
+     */
     private ByteBuffer rodata;
-    private DataInputStream rodataDataInputStream;
+    /**
+     * The offset in the file that the text section begins.
+     */
     private int textOffset;
+    /**
+     * The size in bytes of the text section.
+     */
     private int textSize;
+    /**
+     * The offset in the file that the rodata section begins.
+     */
     private int rodataOffset;
+    /**
+     * The size in bytes of the rodata section.
+     */
     private int rodataSize;
+    /**
+     * The {@link TranslationUnit} that we are currently loading from the file.
+     */
     private TranslationUnit translationUnit;
 
+    /**
+     * Create a {@link BinaryInput} object.
+     */
     public BinaryInput() {
 
     }
 
+    /**
+     * Process a file's data and load a {@link TranslationUnit}.
+     * @param inputFileName The name of the file to process.
+     * @return The newly loaded {@link TranslationUnit}.
+     */
     public TranslationUnit run(final String inputFileName) {
         translationUnit = new TranslationUnit();
 
@@ -87,6 +127,10 @@ public class BinaryInput {
         return translationUnit;
     }
 
+    /**
+     * Load a {@link Block} and add it to the {@link TranslationUnit} that we are currently loading.
+     * @return The newly loaded {@link Block}.
+     */
     protected Block loadBlock() {
         // Get the name of the Block.
         int blockNameOffset = 0;
@@ -121,6 +165,11 @@ public class BinaryInput {
         return block;
     }
 
+    /**
+     * Load {@link Statement} and add it to the passed in {@link Block}.
+     * @param block The {@link Block} that will be the parent of the new {@link Statement}.
+     * @return The newly loaded {@link Statement}.
+     */
     protected Statement loadStatement(final Block block) {
         // Read the statement specifier
         byte value = -1;
@@ -174,6 +223,11 @@ public class BinaryInput {
         return statement;
     }
 
+    /**
+     * Load a {@link Literal}. It will not automatically be added to the passed in {@link Statement}.
+     * @param statement The parent {@link Statement} of the {@link Literal} we are loading.
+     * @return The newly loaded {@link Literal}.
+     */
     protected Literal loadLiteral(final Statement statement) {
         // Read the literal type.
         int read = Literal.LiteralType.Null.ordinal();
@@ -210,6 +264,11 @@ public class BinaryInput {
         }
     }
 
+    /**
+     * Read a {@link Byte} from the rodata section at the specified offset.
+     * @param offset The offset within the rodata section to read the {@link Byte}.
+     * @return The {@link Byte} that was read, or null if read failed.
+     */
     protected Byte readByteFromData(final int offset) {
         try {
             return rodata.get(offset);
@@ -220,6 +279,11 @@ public class BinaryInput {
         return null;
     }
 
+    /**
+     * Read a {@link Integer} from the rodata section at the specified offset.
+     * @param offset The offset within the rodata section to read the {@link Integer}.
+     * @return The {@link Integer} that was read, or null if read failed.
+     */
     protected Integer readIntFromData(final int offset) {
         try {
             return rodata.getInt(offset);
@@ -230,6 +294,11 @@ public class BinaryInput {
         return null;
     }
 
+    /**
+     * Read a {@link String} from the rodata section at the specified offset.
+     * @param offset The offset within the rodata section to read the {@link String}.
+     * @return The {@link String} that was read, or null if read failed.
+     */
     protected String readStringFromData(final int offset) {
         int stringLength = 0;
         try {
@@ -252,7 +321,11 @@ public class BinaryInput {
         return null;
     }
 
-    public void loadFile(final String inputFileName) {
+    /**
+     * Load a file from disk and populate the internal file streams.
+     * @param inputFileName The name of the file to load.
+     */
+    protected void loadFile(final String inputFileName) {
         try {
             fileName = inputFileName;
             fileInputStream = new FileInputStream(inputFileName);
